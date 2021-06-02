@@ -19,8 +19,8 @@ const Chat = ({ location }) =>{
         setName(name)
         setRoom(room)
 
-        socket.emit('join', { name, room }, (message)=>{
-            console.log(message)
+        socket.emit('join', { name, room }, (error)=>{
+            console.log(error)
         })
 
         return () => {
