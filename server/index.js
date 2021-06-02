@@ -8,13 +8,25 @@ const router = require('./router')
 
 const app = express()
 const server = http.createServer(app)
-const io = socketio(server)
+const io = socketio(server, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"]
+    }
+  })
+
 
 io.on('connection', (socket)=>{
-    console.log("We have a new connection!!!!")
+    console.log("New Connection -->")
+
+    socket.on('join', ({ name, room }, callback)=>{
+        const message =  `${name} joined the room ${room}`
+        console.log(message)
+        callback(message);
+    })
 
     socket.on('disconnect', ()=>{
-        console.log('User had left!!!')
+        console.log('<-- User left')
     })
 })
 
